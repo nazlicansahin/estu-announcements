@@ -1,100 +1,103 @@
-# ESTÜ Duyuru Botu
+# ESTÜ Announcement Bot
 
-Bu proje, aşağıdaki Eskişehir Teknik Üniversitesi web sitelerinden duyuruları çeken ve bunları Telegram üzerinden gönderen bir bot uygulamasıdır:
+This project is a bot application that fetches announcements from the following Eskişehir Technical University websites and sends them via Telegram:
 
-- Eskişehir Teknik Üniversitesi (ESTÜ) Ana Sayfa
-- ESTÜ Bilgisayar Mühendisliği Bölümü
-- ESTÜ Uluslararası İlişkiler Birimi
+- Eskişehir Technical University (ESTÜ) Main Page  
+- ESTÜ Department of Computer Engineering  
+- ESTÜ International Relations Office  
 
-## Özellikler
+## Features
 
-- Belirtilen web sitelerinden duyuruları otomatik olarak çeker
-- Yeni duyuruları algılar ve tekrar göndermeyi önler
-- Duyuruları Telegram üzerinden istediğiniz sohbete/kanala gönderir
-- Yeni duyuru yoksa bilgilendirme mesajı gönderir
-- Her gün otomatik çalışma özelliği
-- Kullanıcı dostu ve bilgilendirici mesaj formatı
-- Kapsamlı hata yönetimi ve loglama
+- Automatically fetches announcements from specified websites  
+- Detects new announcements and prevents resending  
+- Sends announcements to your desired Telegram chat/channel  
+- Sends an info message if no new announcements are found  
+- Runs automatically every day  
+- User-friendly and informative message format  
+- Comprehensive error handling and logging  
 
-## Kurulum
+## Installation
 
-1. Bu repository'yi klonlayın:
+1. Clone this repository:  
 ```bash
 git clone https://github.com/username/estu-announcements.git
 cd estu-announcements
 ```
 
-2. Gerekli Python paketlerini yükleyin:
+2. Install the required Python packages:  
 ```bash
 pip install -r requirements.txt
 ```
 
-3. `.env.example` dosyasını `.env` olarak kopyalayın ve düzenleyin:
+3. Copy the `.env.example` file as `.env` and edit it:  
 ```bash
 cp .env.example .env
 ```
 
-4. `.env` dosyasını bir metin editörü ile açın ve gerekli değerleri ekleyin:
-   - `TELEGRAM_TOKEN`: Telegram BotFather'dan aldığınız bot token'ı
-   - `TELEGRAM_CHAT_ID`: Mesajların gönderileceği sohbet veya kanal ID'si
+4. Open the `.env` file with a text editor and add the required values:  
+   - `TELEGRAM_TOKEN`: Your bot token obtained from Telegram BotFather  
+   - `TELEGRAM_CHAT_ID`: The chat or channel ID where messages will be sent  
 
-## Telegram Bot Oluşturma
+## Creating a Telegram Bot  
 
-1. Telegram'da [@BotFather](https://t.me/botfather) ile konuşma başlatın
-2. `/newbot` komutunu gönderin ve talimatları izleyin
-3. Bot oluşturulduktan sonra, BotFather size bir token verecektir. Bu token'ı `.env` dosyasına ekleyin.
+1. Start a chat with [@BotFather](https://t.me/botfather) on Telegram  
+2. Send the `/newbot` command and follow the instructions  
+3. After creating the bot, BotFather will provide you with a token. Add this token to the `.env` file.  
 
-## Chat ID Bulma
+## Finding Chat ID  
 
-- **Kişisel sohbet için:** [@userinfobot](https://t.me/userinfobot) ile konuşma başlatın, size ID'nizi verecektir.
-- **Kanal için:** Kanalınızın kullanıcı adını (örn: @mychannel) biliyorsanız, botunuzu kanala yönetici olarak ekleyin ve kanalınıza bir mesaj gönderin. Ardından şu URL'yi ziyaret edin: `https://api.telegram.org/bot<BOT_TOKEN>/getUpdates`. Bu size kanal ID'sini verecektir.
+- **For personal chats:** Start a conversation with [@userinfobot](https://t.me/userinfobot), and it will give you your ID.  
+- **For channels:** If you know your channel username (e.g., @mychannel), add your bot as an admin and send a message to the channel. Then, visit:  
+  `https://api.telegram.org/bot<BOT_TOKEN>/getUpdates`  
+  This will provide you with the channel ID.  
 
-## Kullanım
+## Usage  
 
-Scripti manuel olarak çalıştırmak için:
+To run the script manually:  
 
 ```bash
 python scraper.py
 ```
 
-- Script yeni duyuruları çekecek ve Telegram üzerinden gönderecektir
-- Daha önce gönderilen duyurular tekrar gönderilmeyecektir
-- Yeni duyuru yoksa, her bir kaynak için bilgilendirme mesajı gönderilecektir
-- İşlem logları `scraper.log` dosyasında saklanacaktır
+- The script will fetch new announcements and send them via Telegram  
+- Previously sent announcements will not be resent  
+- If no new announcements are found, an info message will be sent for each source  
+- Logs will be saved in the `scraper.log` file  
 
-## Otomatik Günlük Çalıştırma
+## Automated Daily Execution  
 
-Bot, her gün otomatik olarak çalışacak şekilde yapılandırılabilir:
+The bot can be configured to run automatically every day.  
 
-### Windows Kullanıcıları İçin
+### For Windows Users  
 
-Windows Görev Zamanlayıcısı ile otomatik çalıştırmak için:
+To schedule automatic execution using Task Scheduler:  
 
-1. Projenin ana dizinindeki `daily_run.bat` dosyasını kullanın
-2. Windows Görev Zamanlayıcısı'nda günlük bir görev oluşturun
-3. Detaylı talimatlar için projedeki `TASK_SCHEDULER_SETUP.md` dosyasını inceleyin
+1. Use the `daily_run.bat` file in the project's root directory  
+2. Create a daily task in Windows Task Scheduler  
+3. Check the `TASK_SCHEDULER_SETUP.md` file in the project for detailed instructions  
 
-### Linux/Mac Kullanıcıları İçin
+### For Linux/Mac Users  
 
-Cron ile otomatik çalıştırmak için:
+To schedule automatic execution using Cron:  
 
 ```bash
-# Her gün saat 08:00'de çalıştırmak için
+# Runs every day at 08:00 AM
 0 8 * * * cd /path/to/estu-announcements && python scraper.py
 ```
 
-## Test Etme
+## Testing  
 
-Yapılandırmayı test etmek için:
+To test the setup:  
 
-1. Scripti manuel olarak çalıştırın: `python scraper.py`
-2. Telegram'da mesajları alıp almadığınızı kontrol edin
-3. Windows'ta `daily_run.bat` dosyasını doğrudan çalıştırarak zamanlayıcı ayarlarını test edin
+1. Run the script manually: `python scraper.py`  
+2. Check if you receive messages on Telegram  
+3. On Windows, run `daily_run.bat` directly to test the scheduler setup  
 
-## Katkıda Bulunma
+## Contributing  
 
-Katkılarınızı bekliyoruz! Lütfen bir pull request açın veya önerilerinizi iletişime geçin.
+We welcome contributions! Please open a pull request or share your suggestions.  
 
-## Lisans
+## License  
 
-Bu proje MIT lisansı altında lisanslanmıştır. Daha fazla bilgi için `LICENSE` dosyasına bakın.
+This project is licensed under the MIT License. For more details, check the `LICENSE` file.
+
